@@ -1,0 +1,9 @@
+1.function foo()
+    return a,b
+end
+print(foo)--->a b
+print(foo,1)--->a 1
+print(foo .. "x")--->ax
+当foo出现在表达式中，则只返回值一个值
+
+2. unpack({数组}):返回数组中所有元素
