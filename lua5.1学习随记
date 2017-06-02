@@ -1,8 +1,65 @@
-字符串转义序列: \\输出反斜杠    \"输出双引号   \'输出单引号
+1.字符串转义序列: \\输出反斜杠    \"输出双引号   \'输出单引号
 
-table:  a={}   a["x"]等价于a.x
+2.table:  a={}   a["x"]等价于a.x
         table的大小以nil作为标志，即使table中间有nil元素，那么也是取nil元素前的元素数作为长度
 
-a%b: 对于整数来说，计算结果的符号与b相同。x%1取的是x的小数部分, x-x%1是其整数部分,x-x%0.01结果是取小数点后两位，以此类推
+3.a%b: 对于整数来说，计算结果的符号与b相同。x%1取的是x的小数部分, x-x%1是其整数部分,x-x%0.01结果是取小数点后两位，以此类推
 
-x>y and x or y  等价于 x>y?x:y
+4.x>y and x or y  等价于 x>y?x:y
+
+5.a,b,c = 0
+  print(a,b,c) ----> 0 nil nil   这样只是给a赋值了，所以给变量赋值时要a,b,c = 0,0,0
+
+6.lua中 不是false和nil的都为true,所以0和空字符串也为true
+
+7.循环语句有 repeat..unitil      
+        for i,v in ipairs(a) do somthing end
+        for k,v in pairs(t) do something  end
+        二者的区别是:
+        local tabFiles = {  
+        [3] = "test2",  
+        [6] = "test3",  
+        [4] = "test1"  
+        }  
+
+        for k, v in ipairs(tabFiles) do  
+        print(k, v)  
+        end  
+        它在 ipairs(tabFiles) 遍历中，当key=1时候value就是nil，所以直接跳出循环不输出任何值。  
+        如果是  
+        for k, v in pairs(tabFiles) do  
+        print(k, v)  
+        end  
+        则会输出所有 ：  
+        3 test2  
+        6 test3  
+        4 test1  
+        现在改变一下表内容，  
+        local tabFiles = {  
+        [1] = "test1",  
+        [6] = "test2",  
+        [4] = "test3"  
+        }  
+        for k, v in ipairs(tabFiles) do  
+        print(k, v)  
+        end  
+        现在的输出结果显而易见就是key=1时的value值test1  
+        >lua -e "io.stdout:setvbuf 'no'" "Test.lua"   
+        1 test1  
+        >Exit code: 0   
+        --[示例1.]--  
+        local tt =  
+        {  
+        [1] = "test3",  
+        [4] = "test4",  
+        [5] = "test5"  
+        }  
+
+        for i,v in pairs(tt) do        -- 输出 "test4" "test3" "test5"  
+        print( tt[i] )  
+        end  
+
+        for i,v in ipairs(tt) do    -- 输出 "test3" k=2时断开  
+        print( tt[i] )  
+        end 
+
