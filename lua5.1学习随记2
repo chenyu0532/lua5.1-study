@@ -33,3 +33,18 @@ print(foo .. "x")--->ax
         select('#', 1,2, nil,3)  --->4  (长度包含nil)
         select(3, 1,2, nil,3)  ---->nil 3  
         select(2, 1,2, nil,3)  ---->2 nil
+
+4. network = {{name = "aaa",ip = "23133"},
+              {name = "bbb",ip = "421412"}}
+   table.sort(network,function(a,b) return (a.name > b.name) end)
+   
+5. 词法域:若一个函数A在另一个函数B里，则A函数可以访问B函数中的局部变量，函数A不管是否是匿名函数都是如此
+    最简单的例子
+    function count()
+    local i = 0;
+    return function()
+            i = i + 1;
+            return i;
+          end
+    end
+    多次输出count() i的值不会被重置
