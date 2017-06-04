@@ -6,4 +6,30 @@ print(foo,1)--->a 1
 print(foo .. "x")--->ax
 当foo出现在表达式中，则只返回值一个值
 
-2. unpack({数组}):返回数组中所有元素
+2. unpack({数组}):返回数组(table)中所有元素  unpack{10,20,30} -->10 20 30
+
+3. 变长参数:用...表示
+    ex1:function add(...)  
+        local s = 0  
+        for i, v in ipairs{...} do   --> {...} 表示一个由所有变长参数构成的数组  
+            s = s + v  
+        end  
+        return s  
+    end  
+    print(add(3,4,5,6,7))  --->25
+    
+    ex2:function fwrite(fmt, ...)  --->3点之前有个固定的参数fmt。具有变长参数的函数同样也可以用拥有任意数量的固定参数，但是固定参数必须放在变长参数之前。  
+                                lua会将前面的实参赋予固定参数，而将余下的实参（如果有的话）视为变长参数。  
+        return io.write(string.format(fmt, ...))     
+    end     
+    fwrite()  --->fmt = nil,没有变长参数。  
+    fwrite("a")   --->fmt = "a",没有变长参数。  
+    fwrite("%d%d", 4, 5) ---->fmt = "%d%d",变长参数= 4 和 5 
+    
+    
+    变长参数可能会包含一些nil,那么就可以用select函数来访问变长参数了：select('#', …)或者 select(n, …)
+    select('#', …)返回可变参数的长度，select(n,…)用于访问n到select('#',…)的参数
+    ex3:select('#', 1,2,3)  --->3
+        select('#', 1,2, nil,3)  --->4  (长度包含nil)
+        select(3, 1,2, nil,3)  ---->nil 3  
+        select(2, 1,2, nil,3)  ---->2 nil
