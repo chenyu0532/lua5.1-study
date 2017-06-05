@@ -61,3 +61,5 @@ print(foo .. "x")--->ax
     function f(x)
         return g(x)
     end
+
+8. assert(a,"bbb") 如果a为true,则简单的返回a，如果为false，则输出错误信息bbb
