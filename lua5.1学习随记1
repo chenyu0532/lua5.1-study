@@ -59,7 +59,7 @@
         print( tt[i] )  
         end  
 
-        for i,v in ipairs(tt) do    -- 输出 "test3" k=2时断开  
+        for i,v in ipairs(tt) do    -- 输出 "test3" 从1开始递加,遇到nil时返回，所以这里k=2时断开  
         print( tt[i] )  
         end 
 
