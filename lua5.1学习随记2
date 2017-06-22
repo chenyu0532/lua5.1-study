@@ -41,6 +41,14 @@ print(foo .. "x")--->ax
         select(3, 1,2, nil,3)  ---->nil 3  
         select(2, 1,2, nil,3)  ---->2 nil
 
+3.1 在使用table时，如果函数只有一个参数且为string或table类型，在调用该函数时，可以不用加圆括号
+	function rename(arg)
+        local old = arg.old
+        local new = arg.new
+        ...
+    end
+	rename {arg.old = "qwe",arg.new = "asd"}
+
 4. network = {{name = "aaa",ip = "23133"},
               {name = "bbb",ip = "421412"}}
    table.sort(network,function(a,b) return (a.name > b.name) end)
