@@ -6,6 +6,13 @@ print(foo,1)--->a 1
 print(foo .. "x")--->ax
 当foo出现在表达式中，则只返回值一个值
 
+2.lua中.和:的区别:
+	定义的时候：Class:test()与 Class.test(self)是等价的，点号(.)要达到冒号(:)的效果要加一个self参数到第一个参数；
+    调用的时候：object:test() 与object.test(object)等价，点号(.)要添加对象自身到第一个参数。
+	
+  之前犯过很2的错误:在require(类)时用了:new(args),但是参数传不过去,看起来跟上面所说的不一样,后来看了源码functions.lua里的class函数
+  从而得知只有.new才能调用到:ctor
+
 2. unpack({数组}):返回数组(table)中所有元素  unpack{10,20,30} -->10 20 30
 
 3. 变长参数:用...表示
