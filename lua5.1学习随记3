@@ -1,0 +1,10 @@
+迭代器与泛型for
+
+迭代器的意思是每调用一次函数即返回集合里的下一个元素，所以迭代器就要记录当前的状态
+如:  function values(t)
+        local i = 0
+        return function()
+            i = i + 1
+            return t[i]
+        end
+     end
