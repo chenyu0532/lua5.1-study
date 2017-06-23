@@ -1,10 +1,19 @@
 迭代器与泛型for
 
 迭代器的意思是每调用一次函数即返回集合里的下一个元素，所以迭代器就要记录当前的状态
-如:  function values(t)
-        local i = 0
-        return function()
-            i = i + 1
-            return t[i]
-        end
-     end
+如: function values(t)
+    	local i = 0
+    	return function()
+        	i = i + 1
+        	return t[i]
+    	end
+ 	end
+ 	t = {10,20,30}
+ 	it = values(t)
+ 	while true do
+ 		local element = it
+ 		if element == nil then
+ 			break
+ 		end
+ 		print(element)
+ 	end
