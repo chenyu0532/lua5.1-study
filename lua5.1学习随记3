@@ -1,6 +1,6 @@
 迭代器与泛型for
 
-迭代器的意思是每调用一次函数即返回集合里的下一个元素，所以迭代器就要记录当前的状态
+1. 迭代器的意思是每调用一次函数即返回集合里的下一个元素，所以迭代器就要记录当前的状态
 如: function values(t)
     	local i = 0
     	return function()
@@ -17,3 +17,43 @@
  		end
  		print(element)
  	end
+ 	--另外一种方式就是利用for
+ 	for element in values(t)
+ 		print(element)
+ 	end
+2. 泛型for:上述的for...in...就是一种泛型for
+	定义:
+	function ipairs2(a)
+		return iter,a,i  --iter是迭代器函数变量 a是待遍历的容器 i是执行iter()时传入的初始值
+	end
+	local function iter(a,i)  --i也就是上面的0
+		i = i + 1
+		local v = a[i]
+		if v then
+			return i, v
+		else
+			return nil,nil
+		end
+	end
+	a = {"100","200","300"}
+	for k,v in ipairs2(a) do
+		print(k,v)
+	end
+
+	例子：遍历一个链表
+	local function getnext(list,node)
+		if not node then
+			return list
+		else
+			return node.next
+		end
+	end
+	function traverse(list)
+		return getnext,list,nil
+	end
+	local list = nil
+	for line in io.lines() do
+		line = {val = line,next = list}
+	end
+	
+
