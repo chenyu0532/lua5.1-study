@@ -13,3 +13,43 @@ table来实现链表:
 		print(l.value)
 		l = l.next
 	end
+
+table中读取数据文件:
+	Entry {name = "Sunzhen",gender = "male"}
+	Entry {name = "zhangchunyu",gender = "female"}
+
+    local personInfo = {}
+    function Entry(b)
+        if b.name then
+            personInfo[b.name] = true
+        end
+    end
+    dofile("d:/lua_data.conf")
+
+    for name in pairs(personInfo) do
+        print(name)
+    end
+
+序列化数据:将数据对象转换为字节流后通过IO记录到文件中，读取的时候再将这些数据重新构造成与原始对象有相同值的新对象
+	function serialize(o)
+		if type(o) == "number" then
+			io.write(o)
+		elseif type(o) == "string" then
+			io.write(string.format("%q",o))
+		elseif type(o) == "table" then
+			io.write("{\n")
+			for k, v in pairs(o) do
+				io.write("["); serialize(k); io.write("] = ")
+				serialize(v)
+				io.write(,\n)
+			end
+			io.write("}\n")
+		else
+			error("can't xxxxxxx")
+		end
+	end
+
+
+
+	
+	
