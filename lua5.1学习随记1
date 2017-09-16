@@ -62,4 +62,18 @@
         for i,v in ipairs(tt) do    -- 输出 "test3" 从1开始递加,遇到nil时返回，所以这里k=2时断开  
         print( tt[i] )  
         end 
+8 闭包:类似于C++里的static变量，即新值是在就值基础上算的
+    闭包总结起来说就是内嵌函数+正确的upvalue
+    例子：
+        local function values(db)
+            local i = 0   ---称为upvalue,类似于C++中的static类型变量
+            return function()  ---匿名函数 也可以是内嵌函数
+                i = i + 1
+                return db[i]
+            end
+        end
+        local testDb = {10,20,30}
+        for v in values(testDb) do
+            print(v) ----10,20,30  i的值是根据上一次的结果算的
+        end
 
