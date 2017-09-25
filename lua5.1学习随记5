@@ -1,1 +1,64 @@
+lua元表与元方法
+
+作用：主要用来定义一些table中原本不存在的操作，比如两个table相加。通过定义元表中的元方法来实现,
+	lua中只能设置table的元表
+
+步骤：比如计算两个table   a + b的值
+	1.判断a和b之一是否有元表
+	2.检查该原表中是否有一个叫__add的字段
+	3.如果有这个字段，则调用__add对应的元方法来计算
+
+getmetatable(t)  获取一个table的元表
+setmatatable(t1,t1) 给表t1设置元表t2
+
+新建一个table时，其元表为空
+	local t = {1,2}
+	print(getmetatable(t)) --->nil
+
+举例：
+	Set = {}
+	local mt = {}
+	function Set.new(l)
+		local set = {}
+		setmetatable(set,mt)
+		for _,v in pairs(l) do
+			set[v] = true
+		end
+		return set
+	end
+	function Set.union(a,b)  --并集
+		local reset = Set.new{}
+		for v in pairs(a) do
+			reset[v] = true
+		end
+		for v in pairs(b) do
+			reset[v] = true
+		end
+		return reset
+	end
+	function Set.interSection(a,b)
+		local reset = Set.new{}
+		for v in pairs(a) do
+			reset[v] = b[v]
+		end
+		return reset
+	end
+
+	function Set.tostring(set)
+		local tb = {}
+		for e in pairs(set)
+			tb[#tb + 1] = e
+		end
+		return "{" .. table.concat(tb,",") .. "}"
+	end
+	function Set.print(s)
+		print(Set.tostring(s))
+	end
+
+	mt.__add = Set.union ---这里用mt.__add是因为定义的两个方法函数都存放在元表里，也就是mt里
+
+	local set1 = Set.new({10,20,30})
+	local set2 = Set.new({1,2})
+	local set3 = set1 + set2
+	Set.print(set3)
 
