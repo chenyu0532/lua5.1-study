@@ -24,6 +24,7 @@ setmatatable(t1,t1) 给表t1设置元表t2
 		for _,v in pairs(l) do
 			set[v] = true
 		end
+		mt.__metatable = "不能获取这个元表" ---为了防止元表被篡改，这样setmetatable和getmetatable都会无效
 		return set
 	end
 	function Set.union(a,b)  --并集
@@ -61,4 +62,26 @@ setmatatable(t1,t1) 给表t1设置元表t2
 	local set2 = Set.new({1,2})
 	local set3 = set1 + set2
 	Set.print(set3)
+
+在table中查找一个字段的步骤是：
+	如果table有这个字段，则直接返回
+	如果没有，则会去查找一个叫__index的方法，再就是调用对应的元方法，返回
+	如果没有这个元方法，则返回nil
+例子：
+	Windows = {}
+	Windows.default = {x = 0,y = 1,width = 100,height = 200,color = {r = 1,g = 2,b = 3}}
+	Windows.mt = {}
+	function Windows.new(o)
+		setmetatable(o,Windows.mt)
+		return o
+	end
+	Windows.mt.__index = function(table, key)---或者Windows.mt.__index = Windows.default
+		return Windows.default[key]
+	end
+	local win = Windows.new({x = 10, y = 20})
+	print(win.x)  -->10
+	print(win.width) --->100 ---调用了元方法
+
+
+
 
