@@ -1,2 +1,6 @@
 元表中的__index与__newindex
 
+__index是当访问table中不存在的字段时，会调用这个。是用来查询数据
+__newindex是当对table中不存在的字段赋值时，会调用这个。是用来更新数据
+
+
