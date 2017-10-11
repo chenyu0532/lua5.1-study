@@ -82,6 +82,13 @@ setmatatable(t1,t1) 给表t1设置元表t2
 	print(win.x)  -->10
 	print(win.width) --->100 ---调用了元方法
 
+__newindex元方法
+	__newindex用来更新table里的数据，步骤是：
+	首先判断table是否有元表
+	如果有元表，则查找是否有__index元方法，如果没有元表，则直接添加这个索引并赋值
+	如果__index是一个函数，则立即执行它
+	如果__index是一个table，则会直接给__newindex里的索引赋值，而不是对原来的赋值
+	
 
 
 

@@ -1,0 +1,37 @@
+lua 环境概念  知道怎么回事就行了
+
+这里的"环境"指的是存储所有全局变量的table，lua将这个table保存到了_G中(记住就行)
+
+对于声明一个新的全局变量，可以通过rawset(t,k,v)来绕过元表直接设置
+同样对于要查询某个变量，可以直接通过rawget(t, k)来查询
+
+可以通过setfenv来改变一个全局变量的环境
+setfenv(函数, 新环境table)  或者  setfenv(n, 新环境table) n为1时是当前函数 2是当前函数的函数 以此类推
+
+例如 a = 1
+	setfenv(1, {})
+
+	print(a) ---error 因为全局变量的环境已经改变了，新的环境并没有print函数
+
+所以可以这样
+	
+	a = 1
+	setfenv(1, {g = _G})
+	g.print(g.a) -->1
+	g.print(a) --->nil
+
+或者也可以这样
+
+	a = 1
+	setfenv(1, { _G= _G})
+	_G.print(_G.a) -->1
+	_G.print(a) --->nil
+
+或许也可以这样
+	
+	a = 1
+	local newEnv = {}
+	setmetatable(newEnv, {__index = _G})
+
+	setfenv(1, newEnv)
+	print(a) --->1
