@@ -1,0 +1,17 @@
+模块与包   
+
+主要是require与module的加载策略
+
+require加载的一般流程是:现在package.path中搜索，没有的话则到package.cpath中，没有还没找到则报错
+
+
+比如在quick里   package.path = .\?.lua;F:\quick-cocos2d-lua\Quick-Cocos2dx-Community\quick\player\win32\lua\?.lua;F:\quick-cocos2d-lua\Quick-Cocos2dx-Community\quick\player\win32\lua\?\init.lua;;F:/Triple/src/?.lua;src/
+
+比如在quick里 package.cpath = .\?.dll;F:\quick-cocos2d-lua\Quick-Cocos2dx-Community\quick\player\win32\?.dll;F:\quick-cocos2d-lua\Quick-Cocos2dx-Community\quick\player\win32\loadall.dll
+
+模块：游戏中是某一个功能，比如某道具数量的增加减少等操作
+	最简单的是:
+
+
+
+	
