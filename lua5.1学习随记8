@@ -11,6 +11,37 @@ require加载的一般流程是:现在package.path中搜索，没有的话则到
 
 模块：游戏中是某一个功能，比如某道具数量的增加减少等操作
 	最简单的是:
+		complex = {}
+		function complex.new(r,i) return {r = r, i = i} end
+
+		function complex.add(a, b) .......
+
+		function complex.sub(a, b) .......
+
+		return complex
+
+	要是不想用的时候写前缀，可以是：
+
+		local modulename = ...
+		local M = {}
+		_G[modulename] = M  ---局部变量赋值给模块名
+		complex = M
+
+		function M.new(r,i) return {r = r, i = i} end
+
+		function M.add(a, b) .......
+
+		function M.sub(a, b).......
+
+		return complex
+
+		保存为test.lua
+
+		require "test.lua"
+
+		c1 = test.new(xxx.yyy)
+		.......
+
 
 
 
