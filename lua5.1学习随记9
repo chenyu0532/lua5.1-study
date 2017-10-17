@@ -1,0 +1,24 @@
+lua 面向对象
+
+冒号在面向对象中的含义：
+	
+通过两个例子来说明
+(1) Accout = {balance = 0}
+	function Accout.withDraw(self, v)
+		self.balance = self.balance - v
+	end
+	a = Accout
+	Accout = nil
+	a.withDraw(a, 100)
+	print(a.balance)
+
+(2) Accout = {balance = 0}
+	function Accout:withDraw(v)
+		self.balance = self.balance - v
+	end
+	a = Accout
+	Accout = nil
+	a:withDraw(100)
+	print(a.balance)
+
+冒号的作用很简单，就是需要在定义方法时候加一个额外的隐藏参数

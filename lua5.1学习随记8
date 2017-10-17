@@ -42,6 +42,45 @@ require加载的一般流程是:现在package.path中搜索，没有的话则到
 		c1 = test.new(xxx.yyy)
 		.......
 
+	如果想在定义函数的时候就不写前缀，那么则可以：
+
+		local modulename = ...
+		local M = {}
+		_G[modulename] = M
+
+		setfenv(1, M)
+
+		各种函数.....
+		return M
+
+
+		如果仅仅这样写，那么其他的全局变量就用不了了，所以我们可以这样
+
+		（1）local modulename = ...
+			local M = {}
+			_G[modulename] = M
+			local _G = _G
+
+			setfenv(1, M)
+
+			return M
+
+		（2）local modulename = ...
+			local M = {}
+			_G[modulename] = M
+
+			local sqrt = math.sqrt()
+			local io = io
+
+			setfenv(1, M)
+
+			各种函数.....
+
+			return M
+			这样就可以用定义好的全局变量了
+
+
+
 
 
 
