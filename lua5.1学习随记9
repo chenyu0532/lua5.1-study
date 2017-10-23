@@ -21,4 +21,78 @@ lua 面向对象
 	a:withDraw(100)
 	print(a.balance)
 
-冒号的作用很简单，就是需要在定义方法时候加一个额外的隐藏参数
+冒号的作用很简单，就是需要在定义方法时候少一个额外的隐藏参数，以及使用函数中省略一个实参
+不过我还是比较习惯句号
+
+类：
+	lua中没有类的概念，与类相似的概念是"原型"，通过原型去调用对应的方法，跟类变量相似
+
+	setmetatable(a, {__index = b}) ---b是a的原型
+
+	例子1：
+		local Accout = {}
+		function Accout:new(o)
+			o = o or {}
+			setmetatable(o, self)
+			self.__index = self
+			return o
+		end
+	调用的时候：
+		local a = Accout:new(valu = 100)
+		a:display()
+
+	例子2：
+		local Accout = {value = 1}
+		function Accout:new(o)
+			o = o or {}
+			setmetatable(o, self)
+			self.__index = self
+			return o
+		end
+		function Accout:display()
+			self.value = self.value + 100
+			print(self.value)
+		end
+		local a = Accout:new({})
+		a:diaplay()   ----101
+
+继承：直接上代码上看
+	local CA = {value = 0}
+
+	function CA:new(o)
+		o = o or {}
+		setmetatable(o, self)
+		self.__index = self
+		return o
+	end
+
+	function CA:display()
+		print(self.value)
+	end
+	function CA:addValue(v)
+		self.value = self.value + v
+	end
+
+	local CALittle = CA:new()
+
+	这样，CALittle既是一个实例对象也是一个类，相当于CALittle继承了CA
+
+	假如再写一个
+		local CALittle2 = CALittle:new({value1 = 10})
+
+	这样的话CALittle2继承自CALittle， CALittle继承自CA
+
+	当CALittle2:display()时，就会先从CALittle2，再CALittle，再CA，由于
+	local CALittle = CA:new()传递的是self，所以value1 = 10 就没法传了
+	
+	--------------题外：实现了类似C++中public private等------------------
+	function newObject(defaultName)
+	    local self = {name = defaultName}
+	    local setName = function (v) self.name = v end
+	    local getName = function () return self.name end
+	    return {setName = setName, getName = getName}
+	end
+ 
+	local objectA = newObject("Jelly")
+	objectA.setName("JellyThink") -- 这里没有使用冒号访问
+	print(objectA.getName())
