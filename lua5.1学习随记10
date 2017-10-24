@@ -1,0 +1,29 @@
+
+string.find(src, dst)  早src中寻找dst  如果找到则返回开始和结束索引，如果没找到返回nil
+	当然dst也可以是正则表达式----->可以看总结的正则表达专块
+
+string.match(src, dst) 作用与find一样，只是他返回的是返回符合条件的子串，并不是索引
+
+string.gsub(src, dst1, dst2) 把src中的所有符合dst1的子串替换成dst2
+
+	当dst2是一个table时，如下
+		local replaceTb = {hello = "Jelly", world = "Think"}
+		local str = "hello world"
+
+		lcoal result1 = string.gsub(str, "hello", replaceTb)
+		print(result1)---->Jelly world
+
+		local result2 = string.gsub(result1, "world", replaceTb)
+		print(result2) ----->Jelly Think
+	所以可以看出，如果dst2是table时，如果查找的字符串(dst1)在table中有相应的key时，则用相应的value来替换
+
+	dst2也可以是一个函数，如下
+
+		local replaceFunc = function(str)
+			return str .. "-----"
+		end
+		local str = "sun zhen"
+		local result = string.gsub(str, "sun", replaceFunc)
+		print(result)---->sun----- zhen
+	所以可以看出，函数的参数是src, 其返回值是来替换dst1的
+
